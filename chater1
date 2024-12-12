@@ -1,0 +1,25 @@
+import speech_recognition as sr
+import pyttsx3
+# TTS 엔진 초기화
+engine = pyttsx3.init()
+# 음성 속성 설정
+engine.setProperty('rate', 150)  # 말하는 속도
+engine.setProperty('volume', 0.9)  # 음량 (0.0 ~ 1.0)
+
+# 음성 인식 객체 생성
+recognizer = sr.Recognizer()
+
+# 마이크에서 입력받기
+with sr.Microphone() as source:
+    print("말하세요...")
+    audio = recognizer.listen(source)
+
+# Google Web Speech API를 사용하여 음성 인식
+try:
+    text = recognizer.recognize_google(audio, language='ko-KR')
+    인사말 = ["안녕" , "안녕하세요" , "반가워" , "하이" ]
+    if text in 인사말:
+        engine.say("반가워 잘 지내니")
+        engine.runAndWait()
+except:
+    print("오류")
